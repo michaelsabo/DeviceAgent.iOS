@@ -13,8 +13,9 @@
 @implementation Query
 
 + (JSONKeyValidator *)validator {
+    NSArray *specifierNames = [QuerySpecifierFactory supportedSpecifierNames];
     return [JSONKeyValidator withRequiredKeys:@[]
-                                 optionalKeys:[QuerySpecifierFactory supportedSpecifierNames]];
+                                 optionalKeys:specifierNames];
 }
 
 - (BOOL)isCoordinateQuery {
@@ -49,13 +50,26 @@
         query = [specifier applyToQuery:query];
     }
 
-    //TODO: if there's a child query, recurse
-    //
-    //if (childQuery) {
-    //    return [childQuery execute];
-    //} else {
     return [query allElementsBoundByIndex];
-    //}
+}
+
+- (NSArray <XCUIElement *> *)executeWithApplication:(XCUIApplication *)application {
+
+    if (_queryConfiguration.selectors.count == 0) {
+        return nil;
+    }
+
+    if (!application.running) {
+        @throw [CBXException withFormat:@"Application %@ is not running", application];
+    }
+
+    XCUIElementQuery *query = [application cbxQueryForDescendantsOfAnyType];
+
+    for (QuerySpecifier *specifier in self.queryConfiguration.selectors) {
+        query = [specifier applyToQuery:query];
+    }
+
+    return [query allElementsBoundByIndex];
 }
 
 - (NSDictionary *)toDict {

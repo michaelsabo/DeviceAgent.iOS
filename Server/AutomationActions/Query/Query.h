@@ -61,6 +61,14 @@ Convenience constructor.
  */
 - (NSArray <XCUIElement *> *)execute;
 
+/**
+ Perform the query against the application.
+ 
+ @param application  The application to query against.
+ @return a list of XCUIElement that match all specififiers in the queryConfig
+ */
+- (NSArray <XCUIElement *> *)executeWithApplication:(XCUIApplication *)application;
+
 /*
     Debug description
  */

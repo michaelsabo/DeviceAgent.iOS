@@ -104,7 +104,7 @@ Before do |scenario|
     :app => launcher.app,
 
     # Maintainers only.
-    #:cbx_launcher => :xcodebuild,
+    :cbx_launcher => :xcodebuild,
 
     # Keep this as true.
     #
@@ -201,6 +201,8 @@ After do |scenario|
   end
 
   after = on_scenario_failure || :default
+
+  after = :pry
 
   case after
     when :default

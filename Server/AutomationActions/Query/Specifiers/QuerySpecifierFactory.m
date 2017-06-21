@@ -5,7 +5,9 @@
 #import "CBXConstants.h"
 
 @implementation QuerySpecifierFactory
+
 static NSMutableDictionary <NSString *, Class> *selectorClasses;
+
 + (void)load {
     unsigned int outCount;
     Class *classes = objc_copyClassList(&outCount);

@@ -95,7 +95,7 @@
                                                                  RouteResponse *response) {
           [response respondWithJSON:@{ @"types": [JSONUtils elementTypes] }];
       }]
-      ];
+    ];
 }
 
 @end
